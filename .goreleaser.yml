@@ -1,0 +1,32 @@
+version: 2
+
+project_name: memwaste
+
+dist: dist
+
+builds:
+  - main: ./main.go
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags: -s -w
+
+release:
+  github:
+    owner: fabiante
+    name: memwaste
+
+dockers:
+  - image_templates:
+      - ghcr.io/fabiante/memwaste:latest
+      - ghcr.io/fabiante/memwaste:{{ .Tag }}
+    dockerfile: ./Dockerfile
+    build_flag_templates:
+      - --platform=linux/amd64
+    goos: linux
+    goarch: amd64
+
